@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        NewUserMade("TestID", "Someone", "test@gmail.com")
+        NewUserMade("TestID", "sahil", "sahil@gmail.com")
     }
 
 }
