@@ -100,22 +100,19 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: Account Created... \n $email")
                     Toast.makeText(this@MainActivity, "Account Created... \n$email", Toast.LENGTH_SHORT).show()
                     val AccName = account.givenName.toString()
-                    database.child("Users").setValue(AccName)
-                    database.child("Users").child(AccName).child("Name").setValue(AccName)
-                    database.child("Users").child(AccName).child("Email").setValue(email)
+
+                    database.child("Users").child(AccName).setValue(User(AccName, email))
                 }
                 else{
                     //existing user
                     var AccName = account.givenName.toString()
                     if (findData(AccName, false) == true){
-                        //if found
+                        //if user is already in the database
                         Toast.makeText(this@MainActivity, "Found In Database", Toast.LENGTH_SHORT).show()
                     }
                     else{
-                        //if not found, add it
-                        database.child("Users").setValue(AccName)
-                        database.child("Users").child(AccName).child("Name").setValue(AccName)
-                        database.child("Users").child(AccName).child("Email").setValue(email)
+                        //if not, add it
+                        database.child("Users").child(AccName).setValue(User(AccName, email))
                     }
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: Existing User...\n$email")
                     Toast.makeText(this@MainActivity, "Account Created... \n$email", Toast.LENGTH_SHORT).show()
@@ -151,7 +148,12 @@ class MainActivity : AppCompatActivity() {
             return returnEmail
         }
         if (Found == false){
+            //If User Doesn't Exist on Database
             return false
+        }
+        if (Found == true){
+            //If User exists on Database
+            return true
         }
         return null
     }
